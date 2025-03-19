@@ -1,31 +1,37 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Home from "./page/Home";
-import Services from "./page/Services";
-import AboutUs from "./page/AboutUs";
-import Contact from "./page/Contact";
-import './App.css'
+import Home from "@/pages/Home";
+import Discipline from "@/pages/Discipline";
+import Competences from "@/pages/Competences";
+import InfoContact from "@/pages/InfoContact";
+import RdvContact from "@/pages/InfoContact/RdvContact";
+import Honoraires from "@/pages/InfoContact/Honoraires";
+import Agenda from "@/pages/InfoContact/Agenda";
+import Galerie from "@/pages/InfoContact/Galerie";
+import Navbar from "@/components/ui/Navbar";
+import Footer from "@/components/ui/Footer";
+import Chatbot from "@/components/Chatbot/Chatbot";
 
-
-const App = () => {
+function App() {
   return (
     <Router>
-      <div className="w-full">
-        <Navbar />
-        <main className="w-full">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/contact" element={<Contact />} />
-          </Routes>
-        </main>
-        <footer className="bg-blue-600 text-white py-4 text-center">
-          © 2025 L'As Du Corp 63. Tous droits réservés.
-        </footer>
+      <Navbar />
+      <div className="pt-20">
+        {/* Ajout d'un padding pour éviter que le contenu soit caché par la navbar fixe */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/discipline" element={<Discipline />} />
+          <Route path="/competences" element={<Competences />} />
+          <Route path="/info-contact" element={<InfoContact />} />
+          <Route path="/info-contact/rdv-contact" element={<RdvContact />} />
+          <Route path="/info-contact/honoraires" element={<Honoraires />} />
+          <Route path="/info-contact/agenda" element={<Agenda />} />
+          <Route path="/info-contact/galerie" element={<Galerie />} />
+        </Routes>
       </div>
+      <Chatbot />
+      <Footer />
     </Router>
   );
-};
+}
 
 export default App;

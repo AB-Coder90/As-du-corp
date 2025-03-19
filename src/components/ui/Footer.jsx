@@ -2,35 +2,54 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="bg-black text-gold border-t border-gold py-8">
-      <div className="container mx-auto px-6 flex flex-col lg:flex-row justify-between items-center">
+    <footer className="bg-black text-[rgb(200,180,140)] border-t border-[rgb(200,180,140)] py-10">
+      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
         
         {/* Logo et Nom */}
-        <div className="flex items-center space-x-3">
-          <OrientalLogo className="h-10 w-10 text-gold" />
-          <span className="text-2xl font-bold font-oriental">L'As Du Corp 63</span>
+        <div className="flex flex-col items-center md:items-start space-y-3">
+          <img src="/images/logo-las-du-corps.png" alt="L'As Du Corps Logo" className="h-14 md:h-16 object-contain" />
+          <span className="text-2xl font-bold font-oriental">L'As Du Corps</span>
+          <p className="text-sm text-gray-400 max-w-xs">
+            Expertise en médecine traditionnelle chinoise : acupuncture, massage Tui Na et harmonisation énergétique.
+          </p>
         </div>
 
         {/* Liens utiles */}
-        <nav className="flex flex-wrap justify-center gap-6 mt-6 lg:mt-0">
+        <div className="flex flex-col items-center md:items-start space-y-2">
+          <h3 className="text-lg font-semibold text-[rgb(200,180,140)] mb-3">Liens rapides</h3>
           <FooterLink to="/" label="Accueil" />
-          <FooterLink to="/about-us" label="À propos" />
-          <FooterLink to="/services" label="Services" />
-          <FooterLink to="/contact" label="Contact" />
+          <FooterLink to="/discipline" label="Discipline" />
+          <FooterLink to="/competences" label="Compétences" />
+          <FooterLink to="/info-contact" label="Info / Contact" />
+          <FooterLink to="/galerie" label="Galerie" />
           <FooterLink to="/privacy-policy" label="Politique de confidentialité" />
-        </nav>
+        </div>
 
-        {/* Réseaux sociaux */}
-        <div className="flex gap-6 mt-6 lg:mt-0">
-          <SocialIcon href="https://facebook.com" Icon={FacebookIcon} />
-          <SocialIcon href="https://instagram.com" Icon={InstagramIcon} />
-          <SocialIcon href="https://linkedin.com" Icon={LinkedInIcon} />
+        {/* Mentions Légales et Réseaux Sociaux */}
+        <div className="flex flex-col items-center md:items-start space-y-2">
+          <h3 className="text-lg font-semibold text-[rgb(200,180,140)] mb-3">Informations</h3>
+          <FooterLink to="/mentions-legales" label="Mentions Légales" />
+          <FooterLink to="/protection-donnees" label="Protection des Données" />
+          <a 
+            href="https://www.google.com/maps/place/L'As+Du+Corp+63/reviews"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg font-medium text-[rgb(200,180,140)] hover:text-yellow-400 transition"
+          >
+            Laisser un avis Google
+          </a>
+          {/* Réseaux sociaux */}
+          <div className="flex gap-4 mt-3">
+            <SocialIcon href="https://facebook.com" Icon={FacebookIcon} />
+            <SocialIcon href="https://instagram.com" Icon={InstagramIcon} />
+            <SocialIcon href="https://linkedin.com" Icon={LinkedInIcon} />
+          </div>
         </div>
       </div>
 
       {/* Copyright */}
-      <div className="text-center text-sm mt-6 text-gray-400">
-        © {new Date().getFullYear()} L'As Du Corp 63. Tous droits réservés.
+      <div className="text-center text-sm mt-8 text-gray-400">
+        © {new Date().getFullYear()} L'As Du Corps. Tous droits réservés.
       </div>
     </footer>
   );
@@ -41,7 +60,7 @@ function FooterLink({ to, label }) {
   return (
     <Link
       to={to}
-      className="text-lg font-medium text-gold hover:text-yellow-400 transition"
+      className="text-lg font-medium text-[rgb(200,180,140)] hover:text-yellow-400 transition"
     >
       {label}
     </Link>
@@ -55,25 +74,10 @@ function SocialIcon({ href, Icon }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="text-gold hover:text-yellow-400 transition"
+      className="text-[rgb(200,180,140)] hover:text-yellow-400 transition"
     >
       <Icon className="w-6 h-6" />
     </a>
-  );
-}
-
-// Icône Logo Oriental
-function OrientalLogo(props) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 64 64"
-      fill="currentColor"
-    >
-      <circle cx="32" cy="32" r="30" stroke="currentColor" strokeWidth="4" fill="none" />
-      <path d="M16 32h32M32 16v32M22 22l20 20M22 42l20-20" stroke="currentColor" strokeWidth="3" fill="none" strokeLinecap="round" />
-    </svg>
   );
 }
 

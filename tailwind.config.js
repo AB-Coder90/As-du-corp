@@ -6,6 +6,10 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        oriental: ["'Scheherazade', serif"], // Police calligraphique orientale
+        sans: ["'Scheherazade', serif"],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -53,9 +57,6 @@ export default {
           '5': 'hsl(var(--chart-5))',
         },
         gold: "#FFD700", // Doré ajouté
-      },
-      fontFamily: {
-        oriental: ["'Scheherazade', serif"], // Police calligraphique orientale
       },
     },
   },
