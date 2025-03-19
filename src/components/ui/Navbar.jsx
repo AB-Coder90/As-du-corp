@@ -34,10 +34,10 @@ export default function Navbar() {
                 </button>
                 {infoOpen && (
                   <div className="absolute left-0 w-full bg-black shadow-md border border-[rgb(200,180,140)] rounded-md">
-                    <NavItem to="/rdv-contact" label="RDV et Contact" />
-                    <NavItem to="/honoraires" label="Honoraires" />
-                    <NavItem to="/agenda" label="Agenda" />
-                    <NavItem to="/galerie" label="Galerie" />
+                    <NavItem to="/info-contact/rdv-contact" label="RDV et Contact" />
+                    <NavItem to="/info-contact/honoraires" label="Honoraires" />
+                    <NavItem to="/info-contact/agenda" label="Agenda" />
+                    <NavItem to="/info-contact/galerie" label="Galerie" />
                   </div>
                 )}
               </div>
@@ -65,10 +65,10 @@ export default function Navbar() {
 
           {/* Info / Contact avec sous-menu */}
           <DropdownMenu label="Info / Contact">
-            <NavItem to="/rdv-contact" label="RDV et Contact" />
-            <NavItem to="/honoraires" label="Honoraires" />
-            <NavItem to="/agenda" label="Agenda" />
-            <NavItem to="/galerie" label="Galerie" />
+            <NavItem to="/info-contact/rdv-contact" label="RDV et Contact" />
+            <NavItem to="/info-contact/honoraires" label="Honoraires" />
+            <NavItem to="/info-contact/agenda" label="Agenda" />
+            <NavItem to="/info-contact/galerie" label="Galerie" />
           </DropdownMenu>
         </nav>
       </div>
@@ -123,7 +123,3 @@ function MenuIcon(props) {
     </svg>
   );
 }
-
-
-
-

@@ -46,7 +46,7 @@ const Home = () => {
   }, []);
 
   return (
-    <main className="relative w-full h-screen bg-black text-white flex items-center justify-center px-8 lg:px-20 overflow-hidden">
+    <main className="relative w-full h-screen bg-black text-white flex items-center justify-center px-8 lg:px-20 overflow-hidden home-page">
       {/* Effet de points animés en arrière-plan */}
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-30"></canvas>
 
@@ -107,15 +107,3 @@ const Home = () => {
 };
 
 export default Home;
-
-
-
-
-
-
-
-
-
-
-
-

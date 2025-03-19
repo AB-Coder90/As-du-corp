@@ -5,6 +5,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-size: 120%; /* Augmentation de 10% supplémentaires de la taille de police globale */
+}
+
 body {
   font-family: 'Scheherazade', serif;
   font-weight: 400;
@@ -77,5 +81,9 @@ h1, h2, h3, h4, h5, h6 {
   }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Réduction de la taille de police spécifiquement pour la page Home */
+  main.home-page {
+    font-size: 90%; /* Réduction de 10% par rapport à la taille globale */
   }
 }

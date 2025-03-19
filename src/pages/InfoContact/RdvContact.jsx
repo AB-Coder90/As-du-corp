@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { useAppointment } from '@/context/AppointmentContext';
 
 const RdvContact = () => {
+  const navigate = useNavigate();
+  const { selectedSlot } = useAppointment();
   const [formData, setFormData] = useState({
     nom: '',
     prenom: '',
@@ -11,6 +15,17 @@ const RdvContact = () => {
     heure: '',
     motif: ''
   });
+
+  // Mettre à jour le formulaire quand un créneau est sélectionné
+  useEffect(() => {
+    if (selectedSlot) {
+      setFormData(prev => ({
+        ...prev,
+        date: selectedSlot.date,
+        heure: selectedSlot.time
+      }));
+    }
+  }, [selectedSlot]);
 
   const handleChange = (e) => {
     setFormData({
@@ -23,127 +38,145 @@ const RdvContact = () => {
     e.preventDefault();
     // Logique de soumission du formulaire
     console.log('Formulaire soumis:', formData);
+    // Rediriger vers la confirmation
+    navigate('/info-contact/confirmation');
   };
 
   return (
-    <div className="bg-black text-white min-h-screen py-16 px-6 lg:px-20">
-      <div className="container mx-auto">
-        <motion.h1 
-          className="text-5xl font-oriental font-bold text-[rgb(200,180,140)] text-center mb-12"
-          initial={{ opacity: 0, y: -30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 3, ease: "easeInOut" }}
-        >
+    <div className="min-h-screen bg-black text-white py-12 px-4 sm:px-6 lg:px-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-3xl mx-auto bg-[#111111] p-8 rounded-lg border border-[rgb(200,180,140)] shadow-md"
+      >
+        <h2 className="text-3xl font-oriental font-bold text-center text-[rgb(200,180,140)] mb-8">
           Prendre Rendez-vous
-        </motion.h1>
+        </h2>
 
-        <motion.form 
-          className="max-w-2xl mx-auto space-y-6 bg-[#111111] p-8 rounded-lg border border-[rgb(200,180,140)] shadow-md"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 3, ease: "easeInOut", delay: 0.2 }}
-          onSubmit={handleSubmit}
-        >
-          <div className="grid md:grid-cols-2 gap-6">
+        {selectedSlot ? (
+          <div className="mb-8 p-4 bg-[rgb(200,180,140)] bg-opacity-10 rounded-lg">
+            <p className="text-[rgb(200,180,140)] text-center">
+              Créneau sélectionné : {new Date(selectedSlot.date).toLocaleDateString('fr-FR')} à {selectedSlot.time.replace(':', 'h')}
+            </p>
+          </div>
+        ) : (
+          <div className="mb-8 p-4 bg-red-900 bg-opacity-10 rounded-lg">
+            <p className="text-red-400 text-center">
+              Aucun créneau sélectionné. Veuillez choisir un créneau dans l'agenda.
+            </p>
+            <div className="text-center mt-4">
+              <button
+                onClick={() => navigate('/info-contact/agenda')}
+                className="px-4 py-2 bg-[rgb(200,180,140)] text-black rounded hover:bg-[rgb(220,200,160)] transition-colors"
+              >
+                Voir l'agenda
+              </button>
+            </div>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label className="block mb-2 text-[rgb(200,180,140)]">Nom</label>
-              <input 
+              <label htmlFor="nom" className="block text-sm font-medium text-[rgb(200,180,140)]">
+                Nom
+              </label>
+              <input
                 type="text"
                 name="nom"
+                id="nom"
+                required
                 value={formData.nom}
                 onChange={handleChange}
-                className="w-full p-3 bg-black border border-[rgb(200,180,140)] rounded text-white focus:outline-none focus:border-white transition-colors duration-200"
-                required
+                className="mt-1 block w-full rounded-md bg-black border border-[rgb(200,180,140)] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[rgb(200,180,140)] focus:border-transparent"
               />
             </div>
             <div>
-              <label className="block mb-2 text-[rgb(200,180,140)]">Prénom</label>
-              <input 
+              <label htmlFor="prenom" className="block text-sm font-medium text-[rgb(200,180,140)]">
+                Prénom
+              </label>
+              <input
                 type="text"
                 name="prenom"
+                id="prenom"
+                required
                 value={formData.prenom}
                 onChange={handleChange}
-                className="w-full p-3 bg-black border border-[rgb(200,180,140)] rounded text-white focus:outline-none focus:border-white transition-colors duration-200"
-                required
+                className="mt-1 block w-full rounded-md bg-black border border-[rgb(200,180,140)] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[rgb(200,180,140)] focus:border-transparent"
               />
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label className="block mb-2 text-[rgb(200,180,140)]">Email</label>
-              <input 
+              <label htmlFor="email" className="block text-sm font-medium text-[rgb(200,180,140)]">
+                Email
+              </label>
+              <input
                 type="email"
                 name="email"
+                id="email"
+                required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full p-3 bg-black border border-[rgb(200,180,140)] rounded text-white focus:outline-none focus:border-white transition-colors duration-200"
-                required
+                className="mt-1 block w-full rounded-md bg-black border border-[rgb(200,180,140)] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[rgb(200,180,140)] focus:border-transparent"
               />
             </div>
             <div>
-              <label className="block mb-2 text-[rgb(200,180,140)]">Téléphone</label>
-              <input 
+              <label htmlFor="telephone" className="block text-sm font-medium text-[rgb(200,180,140)]">
+                Téléphone
+              </label>
+              <input
                 type="tel"
                 name="telephone"
+                id="telephone"
+                required
                 value={formData.telephone}
                 onChange={handleChange}
-                className="w-full p-3 bg-black border border-[rgb(200,180,140)] rounded text-white focus:outline-none focus:border-white transition-colors duration-200"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block mb-2 text-[rgb(200,180,140)]">Date souhaitée</label>
-              <input 
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                className="w-full p-3 bg-black border border-[rgb(200,180,140)] rounded text-white focus:outline-none focus:border-white transition-colors duration-200"
-                required
-              />
-            </div>
-            <div>
-              <label className="block mb-2 text-[rgb(200,180,140)]">Heure souhaitée</label>
-              <input 
-                type="time"
-                name="heure"
-                value={formData.heure}
-                onChange={handleChange}
-                className="w-full p-3 bg-black border border-[rgb(200,180,140)] rounded text-white focus:outline-none focus:border-white transition-colors duration-200"
-                required
+                className="mt-1 block w-full rounded-md bg-black border border-[rgb(200,180,140)] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[rgb(200,180,140)] focus:border-transparent"
               />
             </div>
           </div>
 
           <div>
-            <label className="block mb-2 text-[rgb(200,180,140)]">Motif de consultation</label>
-            <textarea 
+            <label htmlFor="motif" className="block text-sm font-medium text-[rgb(200,180,140)]">
+              Motif du rendez-vous
+            </label>
+            <textarea
               name="motif"
+              id="motif"
+              required
+              rows={4}
               value={formData.motif}
               onChange={handleChange}
-              className="w-full p-3 bg-black border border-[rgb(200,180,140)] rounded text-white focus:outline-none focus:border-white transition-colors duration-200 min-h-[100px]"
-              required
-            ></textarea>
+              className="mt-1 block w-full rounded-md bg-black border border-[rgb(200,180,140)] text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[rgb(200,180,140)] focus:border-transparent"
+              placeholder="Décrivez brièvement la raison de votre consultation..."
+            />
           </div>
 
-          <motion.button
-            type="submit"
-            className="w-full px-6 py-3 bg-black text-white border border-[rgb(200,180,140)] rounded hover:bg-[rgb(200,180,140)] hover:text-black transition-colors duration-200"
-            whileHover={{ scale: 1.02 }}
-            transition={{ duration: 0.3 }}
-          >
-            Envoyer la demande
-          </motion.button>
-
-          <p className="text-sm text-[rgb(220,200,160)] mt-4">
-            * Tous les champs sont obligatoires. Vous recevrez une confirmation par email.
-          </p>
-        </motion.form>
-      </div>
+          <div className="flex justify-end space-x-4">
+            <button
+              type="button"
+              onClick={() => navigate('/info-contact/agenda')}
+              className="px-6 py-3 bg-black text-[rgb(200,180,140)] border border-[rgb(200,180,140)] rounded hover:bg-[rgb(200,180,140)] hover:text-black transition-colors"
+            >
+              Retour à l'agenda
+            </button>
+            <button
+              type="submit"
+              disabled={!selectedSlot}
+              className={`px-6 py-3 rounded transition-colors ${
+                selectedSlot
+                  ? 'bg-[rgb(200,180,140)] text-black hover:bg-[rgb(220,200,160)]'
+                  : 'bg-gray-800 text-gray-500 cursor-not-allowed'
+              }`}
+            >
+              Confirmer le rendez-vous
+            </button>
+          </div>
+        </form>
+      </motion.div>
     </div>
   );
 };
